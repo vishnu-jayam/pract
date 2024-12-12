@@ -1,0 +1,46 @@
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+import time
+
+# Set up the WebDriver (make sure ChromeDriver is installed and in PATH)
+driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+
+# Open the login page (replace with the actual URL)
+driver.get("https://example.com/login")  # Replace with your login page URL
+
+# Wait for the page to load
+time.sleep(2)
+
+# Find the username and password fields
+username_field = driver.find_element(By.ID, "username")  # Replace with the actual ID or locator
+password_field = driver.find_element(By.ID, "password")  # Replace with the actual ID or locator
+
+# Clear the fields in case there is any pre-filled text
+username_field.clear()
+password_field.clear()
+
+# Input the username and password (replace with your credentials)
+username_field.send_keys("your_username")
+password_field.send_keys("your_password")
+
+# Submit the form (you can either click the login button or press Enter)
+login_button = driver.find_element(By.ID, "loginButton")  # Replace with the actual login button's ID or locator
+login_button.click()
+
+# Wait for login to complete (you can adjust the sleep time)
+time.sleep(5)
+
+# Optional: You can also check for a successful login by looking for a specific element that appears after login
+try:
+    # Example: Check for a logout button or profile picture to ensure login is successful
+    user_profile = driver.find_element(By.ID, "userProfile")  # Replace with actual element after login
+    print("Login successful!")
+except Exception as e:
+    print("Login failed:", e)
+
+# Close the browser
+driver.quit()
